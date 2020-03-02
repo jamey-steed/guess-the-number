@@ -10,6 +10,9 @@
     {{ html | safe}}
 </body>
 <script>
+    window.onbeforeunload = function () {
+        navigator.sendBeacon("/kill", null)
+    };
     document.querySelector('#easy').addEventListener('click', function(){window.location.replace('guess-the-number?difficulty=1')})
     document.querySelector('#medium').addEventListener('click', function(){window.location.replace('guess-the-number?difficulty=2')})
     document.querySelector('#hard').addEventListener('click', function(){window.location.replace('guess-the-number?difficulty=3')})

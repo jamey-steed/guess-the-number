@@ -46,10 +46,11 @@ def check_guess():
         return "correct"
 
 
-@app.route('/kill', methods=["GET"])
+@app.route('/kill', methods=["GET", "POST"])
 def kill():
     shutdown_server()
     return("Server shutting down...")
+
 
 
 def shutdown_server():

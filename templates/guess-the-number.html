@@ -9,6 +9,9 @@
 {{ html | safe}}
 </body>
 <script>
+    window.onbeforeunload = function () {
+        navigator.sendBeacon("/kill", null)
+    };
     const wrapper = document.getElementById('wrapper');
     let guesses=0;
     wrapper.addEventListener('click', (event) => {
@@ -59,7 +62,7 @@
                             button = document.getElementById(i.toString());
                         }
                         xhttp.open("GET", `kill`, true);
-                        xhttp.send()
+                        xhttp.send();
                         alert(`CORRECT! YOU WON IN ${guesses} guesses!`);
                         close();
                         }

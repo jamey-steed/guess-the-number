@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <title>Guess the Number Game</title>
+</head>
+<body>
+    <h1>Guess the Number</h1>
+    <h2>Choose the Difficulty:</h2>
+    {{ html | safe}}
+</body>
+<script>
+    document.querySelector('#easy').addEventListener('click', function(){window.location.replace('guess-the-number?difficulty=1')})
+    document.querySelector('#medium').addEventListener('click', function(){window.location.replace('guess-the-number?difficulty=2')})
+    document.querySelector('#hard').addEventListener('click', function(){window.location.replace('guess-the-number?difficulty=3')})
+</script>
+</html>

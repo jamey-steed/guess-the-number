@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guess the Number</title>
+</head>
+<body>
+<h1>Guess the Number:</h1>
+{{ html | safe}}
+</body>
+<script>
+    const wrapper = document.getElementById('wrapper');
+    let guesses=0;
+    wrapper.addEventListener('click', (event) => {
+
+        console.log(guesses);
+        const isButton = event.target.nodeName === 'BUTTON';
+        if (!isButton){
+            return;
+        }else {guesses += 1;}
+        let xhttp = new XMLHttpRequest();
+        xhttp.open("GET", `check-guess?guess=${event.target.id}`, true);
+        xhttp.onload = function () {
+            if (xhttp.readyState === xhttp.DONE) {
+                if (xhttp.status === 200) {
+                    let i = event.target.id;
+                    var button = document.getElementById(i.toString());
+                    i = parseInt(i, 10);
+                    if (xhttp.responseText === "greater"){
+                        while ( button ){
+                            button.disabled = true
+                            button.style.visibility = "hidden";
+                            i = i+1;
+                            button = document.getElementById(i.toString())
+                        }
+                    }
+                    if (xhttp.responseText === "less"){
+                        while ( button ) {
+                            button.disabled = true
+                            button.style.visibility = "hidden";
+                            i = i - 1;
+                            button = document.getElementById(i.toString())
+                        }
+                    }
+                    if (xhttp.responseText === "correct"){
+                        let i = 1;
+                        button = document.getElementById(i.toString());
+                        while ( button ) {
+                            console.log(button.id);
+                            console.log(event.target.id);
+                            if (button.id === event.target.id) {
+                                button.disabled = true;
+                                button.style.background = 'green';
+                            }else {
+                                button.disabled = true;
+                                button.style.visibility = 'hidden'
+                            }
+                            i += 1;
+                            button = document.getElementById(i.toString());
+                        }
+                        xhttp.open("GET", `kill`, true);
+                        xhttp.send()
+                        alert(`CORRECT! YOU WON IN ${guesses} guesses!`);
+                        close();
+                        }
+                    }
+                }
+            };
+
+        xhttp.send();
+
+    })
+</script>
+</html>
